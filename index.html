@@ -12,12 +12,9 @@
                 var firstSheetName = workbook.SheetNames[0];
                 var worksheet = workbook.Sheets[firstSheetName];
 
-                // Convert sheet to JSON to filter blank rows
                 var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
                 var filteredData = jsonData.filter(row => row.some(filledCell));
 
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
                 var headerRowIndex = filteredData.findIndex((row, index) =>
                   row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
                 );
@@ -26,7 +23,6 @@
                   headerRowIndex = 0;
                 }
 
-                // Convert filtered JSON back to CSV
                 var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
                 csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
                 return csv;
@@ -59,8 +55,7 @@
             cursor: none;
             position: relative;
         }
-
-        /* Анимированный фон */
+        
         body::before {
             content: '';
             position: fixed;
@@ -78,7 +73,6 @@
             100% { transform: translate(50px, 50px); }
         }
 
-        /* Кастомный курсор с сиянием */
         .cursor {
             width: 20px;
             height: 20px;
@@ -282,7 +276,6 @@
             transform: rotate(360deg);
         }
 
-        /* Элемент "Не нажимать" */
         .warning {
             position: fixed;
             top: 20px;
@@ -388,12 +381,10 @@
     </style>
 </head>
 <body>
-    <!-- Кастомный курсор -->
     <div class="cursor"></div>
 
     <header>
-        <h1>👑 ЛУЧШИЙ ПАК ДЛЯ СКИТА 👑 <img src="https://i.imgur.com/8k2X9yT.png" alt="Skeet" class="skeet-icon"></h1>
-        <!-- Если иконка не работает, замени src на https://via.placeholder.com/30?text=Skeet -->
+        <h1>👑 ЛУЧШИЙ ПАК ДЛЯ СКИТА 👑 <img src="https://via.placeholder.com/30?text=Skeet" class="skeet-icon"></h1>
     </header>
 
     <div class="container">
@@ -422,30 +413,25 @@
         <p>© кому это надо</p>
     </footer>
 
-    <!-- Элемент "Не нажимать" -->
-    <div class="warning" onclick="showPopup()">Не нажимать!</div>
+    <div class="warning" onclick="showPopup()">не нажимай</div>
 
-    <!-- Попап с фото -->
     <div class="popup" id="popup">
         <img src="https://via.placeholder.com/300" alt="Secret Image">
-        <a href="#" class="popup-close" onclick="hidePopup()">Закрыть</a>
+        <a href="#" class="popup-close" onclick="hidePopup()">закрыть</a>
     </div>
 
     <script>
-        // Кастомный курсор
         const cursor = document.querySelector('.cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = `${e.clientX}px`;
             cursor.style.top = `${e.clientY}px`;
         });
 
-        // Эффект при наведении на ссылки
         document.querySelectorAll('a, button').forEach(elem => {
             elem.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             elem.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
         });
 
-        // Попап
         function showPopup() {
             document.getElementById('popup').style.display = 'block';
         }
@@ -454,7 +440,6 @@
             document.getElementById('popup').style.display = 'none';
         }
 
-        // Закрытие попапа при клике вне изображения
         window.addEventListener('click', (e) => {
             const popup = document.getElementById('popup');
             if (e.target === popup) {
