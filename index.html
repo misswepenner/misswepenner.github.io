@@ -12,22 +12,17 @@
                 var firstSheetName = workbook.SheetNames[0];
                 var worksheet = workbook.Sheets[firstSheetName];
 
-                // Convert sheet to JSON to filter blank rows
                 var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
                 var filteredData = jsonData.filter(row => row.some(filledCell));
 
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
                 var headerRowIndex = filteredData.findIndex((row, index) =>
                   row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
                 );
-                // Fallback
                 if (headerRowIndex === -1 || headerRowIndex > 25) {
                   headerRowIndex = 0;
                 }
 
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
                 csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
                 return csv;
             } catch (e) {
@@ -60,7 +55,6 @@
             position: relative;
         }
 
-        /* Анимированный фон с частицами */
         @keyframes moveParticles {
             0% { transform: translate(0, 0); opacity: 0.5; }
             50% { opacity: 1; }
@@ -79,7 +73,6 @@
             animation: moveParticles 10s infinite linear;
         }
 
-        /* Кастомный курсор с сиянием и искрами */
         .cursor {
             width: 20px;
             height: 20px;
@@ -350,7 +343,6 @@
     </style>
 </head>
 <body>
-    <!-- Кастомный курсор -->
     <div class="cursor"></div>
 
     <header>
@@ -384,12 +376,10 @@
     </footer>
 
     <script>
-        // Кастомный курсор
         const cursor = document.querySelector('.cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = `${e.clientX}px`;
             cursor.style.top = `${e.clientY}px`;
-            // Эффект искр
             const spark = document.createElement('div');
             spark.className = 'spark';
             spark.style.left = `${e.clientX}px`;
@@ -398,7 +388,6 @@
             setTimeout(() => spark.remove(), 500);
         });
 
-        // Эффект при наведении на ссылки
         document.querySelectorAll('a, button').forEach(elem => {
             elem.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             elem.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
